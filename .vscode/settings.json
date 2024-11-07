@@ -1,0 +1,49 @@
+{
+  "editor.fontSize": 14,
+  "window.zoomLevel": 0.8,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "files.trimTrailingWhitespace": true,
+  "editor.formatOnSave": true,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "workbench.editor.enablePreview": false,
+  "editor.minimap.enabled": false,
+  "editor.wordWrap": "on",
+  "editor.wrappingIndent": "indent",
+  "html.format.enable": true,
+  "css.lint.unknownAtRules": "ignore",
+  // "workbench.colorTheme": "One Monokai",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.accessibilitySupport": "off",
+  "git.ignoreMissingGitWarning": true,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "files.eol": "\n",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "liveServer.settings.port": 5501,
+  "cSpell.words": [
+    "@tailwind",
+    "axios",
+    "daisyui",
+    "Instatus",
+    "Kanban",
+    "Pinia",
+    "Scissxrd",
+    "Signup",
+    "tailwindcss",
+    "Артикулы",
+    "Главная",
+    "Номенклатура",
+    "свечение",
+    "Склад"
+  ],
+}
