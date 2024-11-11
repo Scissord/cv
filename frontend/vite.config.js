@@ -11,6 +11,7 @@ export default defineConfig({
       '@utils': '/src/utils/lib',
       '@hooks': '/src/hooks/lib',
       '@store': '/src/store/lib',
+      '@plugins': '/src/plugin/lib',
     },
     extensions: ['.js', '.vue', '.json'],
   }

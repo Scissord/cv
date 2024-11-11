@@ -1,4 +1,4 @@
-import AppLayout from '@/layouts/App.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 import Home from '@/pages/home/Home.vue';
 import Chat from '@/pages/chat/Chat.vue';
 import Kanban from '@/pages/kanban/Kanban.vue';

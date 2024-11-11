@@ -15,6 +15,7 @@ library.add(fas, far, fab)
 const app = createApp(App);
 const pinia = createPinia();
 
+// Icon
 app.component('Icon', FontAwesomeIcon)
 
 app.use(pinia);

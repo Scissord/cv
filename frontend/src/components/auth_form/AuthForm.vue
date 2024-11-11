@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 
-const email = ref('');
+const login = ref('');
 const password = ref('');
 
 const handleLogin = () => {
-  console.log('Email:', email.value, 'Password:', password.value);
+  console.log('Email:', login.value, 'Password:', password.value);
 };
 </script>
 
@@ -28,29 +28,29 @@ const handleLogin = () => {
         </h1>
         <!-- Email Field -->
         <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700">
-            Электронная почта
+          <label for="login" class="block text-sm font-medium text-gray-700">
+            Login
           </label>
           <input
-            type="email"
-            id="email"
-            v-model="email"
-            required
+            id="login"
+            type="login"
+            v-model="login"
             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            placeholder="Введите email"
+            placeholder="..."
+            required
           />
         </div>
 
         <!-- Password Field -->
         <div class="mb-6">
-          <label for="password" class="block text-sm font-medium text-gray-700">Пароль</label>
+          <label for="login" class="block text-sm font-medium text-gray-700">Password</label>
           <input
-            type="password"
             id="password"
+            type="password"
             v-model="password"
-            required
             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            placeholder="Введите пароль"
+            placeholder="******"
+            required
           />
         </div>
 
@@ -59,12 +59,12 @@ const handleLogin = () => {
           type="submit"
           class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
         >
-          Войти
+          Submit
         </button>
 
         <p class="mt-4 text-sm text-center text-gray-600">
-          Забыли пароль?
-          <a href="#" class="text-blue-600 hover:underline">Восстановить доступ</a>
+          Forgot your password?
+          <a href="#" class="text-blue-600 hover:underline">Restore access</a>
         </p>
       </form>
     </div>

@@ -73,7 +73,7 @@ const css = {
           :class="css.link"
         />
         <Icon
-          icon="fa-solid fa-sun"
+          :icon="theme.theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun'"
           :class="css.link"
           @click="theme.toggleTheme"
         />

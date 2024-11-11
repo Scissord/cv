@@ -1,4 +1,4 @@
-import AuthLayout from '@/layouts/Auth.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 import Auth from '@/pages/auth/Auth.vue';
 
 const authRoutes = {

@@ -4,11 +4,20 @@ import Footer from "./app/footer/Footer.vue";
 import { useTheme } from "@store";
 
 const theme = useTheme();
-console.log(theme.theme);
+
+import { useModalStore } from '@store';
+import { Modal } from '@components';
+
+const modal = useModalStore();
 </script>
 
 <template>
-  <div :class="theme.theme === 'dark' ? 'dark' : ''">
+  <div :class="theme.theme === 'dark' ? 'dark' : 'light'">
+    <Modal
+      v-if="modal.isVisible"
+      :title="modal.title"
+      :children="modal.children"
+    />
     <Header/>
 
     <main>

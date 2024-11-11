@@ -1,4 +1,15 @@
 <script setup>
+import { useModalStore } from '@store';
+import Dick from './Dick';
+const modal = useModalStore()
+
+const handleOpenModal = () => {
+  modal.show({
+    title: 'Это заголовок модалки',
+    children: Dick
+  })
+};
+
 </script>
 
 <template>
@@ -20,6 +31,7 @@
             checkout all projects. With passion  <br/>
             for learning and creating.
           </p>
+          <button @click="handleOpenModal" class="bg-red-100">Открыть</button>
         </div>
       </div>
       <div class="w-1/2 h-full flex items-center justify-center">

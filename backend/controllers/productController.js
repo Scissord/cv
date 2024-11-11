@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as Product from '../models/product.js';
+import * as Product from '../models/product.js'
 import * as ProductCategory from '../models/product_category.js';
 import * as ProductBrand from '../models/product_brand.js';
 import * as ProductTags from '../models/product_tag.js';

@@ -1,18 +1,82 @@
 import bcrypt from 'bcryptjs';
 import * as User from "../models/user.js";
 import * as UserToken from "../models/user_token.js";
-import * as Role from "../models/role.js";
 import generateTokens from '../helpers/generateTokens.js';
+import sha256 from 'js-sha256';
+
+export const signup = async (req, res) => {
+	try {
+		const { name, phone, password, confirmPassword, gender } = req.body;
+
+		const user = await User.isExist(name, phone);
+
+		// Should be in validate function (service)
+		if (password !== confirmPassword) {
+			return res.status(400).send({ error: "Passwords don't match" });
+		}
+		if (user) {
+			return res.status(400).send({ error: "Username or phone already exists" });
+		}
+		if (password.length < 6) {
+			return res.status(400).send({ error: "Password must be at least 6 characters long" });
+		}
+
+		// HASH PASSWORD
+		const salt = await bcrypt.genSalt(10);
+		const hashedPassword = await bcrypt.hash(password, salt);
+
+		// https://gravatar.com/
+    const address = String(name).trim().toLowerCase();
+    const hash = sha256(address);
+    const avatar = `https://www.gravatar.com/avatar/${hash}?d=wavatar`;
+
+    const newUser = await User.create({
+      name,
+      phone,
+      password: hashedPassword,
+      gender,
+			avatar
+    })
+
+		if(newUser) {
+			const { accessToken, refreshToken } = generateTokens(newUser.id);
+
+      await UserToken.create({
+        user_id: newUser.id,
+        refresh_token: refreshToken,
+        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true, // XSS
+        sameSite: "strict", // CSRF
+        secure: process.env.NODE_ENV === "production"
+      });
+
+			return res.status(201).send({
+        message: "Successfully created",
+        user: newUser,
+        accessToken
+      });
+		} else {
+			return res.status(400).send({ error: "Invalid user data" });
+		}
+	}	catch (err) {
+		console.log("Error in post signup controller", err.message);
+		res.status(500).send({ error: "Internal Server Error" });
+	};
+};
 
 export const login = async (req, res) => {
 	try {
-		const { name, password } = req.body;
+		const { name, phone, email, password } = req.body;
 
-		const user = await User.findByName(name);
+		const user = await User.findOne(name);
 		const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
-    if(!user) return res.status(400).send({ error: "Такого пользователя нет!" });
-		if(!isPasswordCorrect) return res.status(400).send({ error: "Неверный пароль" });
+    if(!user) return res.status(400).send({ error: "This user does not exist" });
+		if(!isPasswordCorrect) return res.status(400).send({ error: "Invalid password" });
 
     // generate JWT TOKEN
     const { accessToken, refreshToken } = generateTokens(user.id);
@@ -27,11 +91,8 @@ export const login = async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
       httpOnly: true, // Защищает от XSS атак
       sameSite: "strict", // Защита от CSRF атак
-      secure: process.env.NODE_ENV === "production", // Только в производственной среде
+      secure: process.env.NODE_ENV === "production" // Только в производственной среде
     });
-
-    const role = await Role.getForUser(user.role);
-    user.role = role;
 
 		res.status(200).send({ message: "Successfully login", user, accessToken });
 	}	catch (err) {

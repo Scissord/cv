@@ -1,4 +1,4 @@
-import ErrorLayout from '@/layouts/Error.vue';
+import ErrorLayout from '@/layouts/ErrorLayout.vue';
 import Error from '@/pages/error/Error.vue';
 
 const errorRoutes = {
