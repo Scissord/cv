@@ -6,3 +6,8 @@
 * {
   font-family: "Montserrat", serif;
 }
+
+:root {
+  --primary-color: #a855f7;
+  --primary-hover-color: #7e22ce;
+}

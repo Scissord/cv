@@ -1,4 +1,5 @@
 <script setup>
+import { Button } from "@components"
 import { useModalStore } from '@store';
 import Dick from './Dick';
 const modal = useModalStore()
@@ -13,7 +14,7 @@ const handleOpenModal = () => {
 </script>
 
 <template>
-  <div class="min-h-[94vh] flex items-center justify-center bg-gradient-to-r from-vue to-react dark:from-green-950 dark:to-blue-950"
+  <div class="h-[94vh] flex items-center justify-center bg-gradient-to-r from-vue to-react dark:from-green-950 dark:to-blue-950"
   >
     <div class="container mx-auto flex items-center">
       <div class="flex justify-center w-1/2 text-black dark:text-white">
@@ -31,7 +32,11 @@ const handleOpenModal = () => {
             checkout all projects. With passion  <br/>
             for learning and creating.
           </p>
-          <button @click="handleOpenModal" class="bg-red-100">Открыть</button>
+          <Button
+            text="Open"
+            className="bg-red-500 focus:ring-2 focus:ring-red-700 focus:ring-offset-2 hover:bg-red-700"
+            @click="handleOpenModal"
+          />
         </div>
       </div>
       <div class="w-1/2 h-full flex items-center justify-center">

@@ -1,8 +1,12 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import Toast, { POSITION }  from "vue-toastification";
 import App from './App.vue';
 import router from './routes';
+import "vue-toastification/dist/index.css";
 import './style.css';
+
+// Import the CSS or use your own!
 
 // font-awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -18,6 +22,10 @@ const pinia = createPinia();
 // Icon
 app.component('Icon', FontAwesomeIcon)
 
+app.use(Toast, {
+  // Setting the global default position
+  position: POSITION.TOP_RIGHT
+});
 app.use(pinia);
 app.use(router);
 app.mount('#app');

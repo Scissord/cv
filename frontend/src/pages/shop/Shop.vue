@@ -1,41 +1,37 @@
 <script setup>
 import { Loader, Button, Select } from '@components';
 import { useAuth } from '@hooks';
-import { useUser, useProducts } from '@store';
+import { useUserStore, useProductsStore } from '@store';
 import { onMounted } from 'vue';
 import ProductCard from './blocks/ProductCard';
 
-const user = useUser();
+const userStore = useUserStore();
+const productsStore = useProductsStore();
 
 const { login, logout } = useAuth();
-
-const {
-  products, getProducts,
-  isProductsGetLoading
-} = useProducts();
 
 const handleProductClick = (title) => {
   alert(`Кнопка нажата! ${title}`);
 };
 
 onMounted(() => {
-  getProducts();
+  productsStore.getProducts();
 });
 </script>
 
 <template>
-  <div v-if="user.isAuthenticated" class="p-8">
-    <Loader v-if="isProductsGetLoading"/>
+  <div v-if="userStore.isAuthenticated" class="p-8">
+    <Loader v-if="productsStore.isProductsGetLoading"/>
     <div v-else class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       <ProductCard
-        v-for="product in products"
+        v-for="product in productsStore.products"
         :key="product.id"
         :product="product"
         @click="handleProductClick"
       />
     </div>
   </div>
-  <div class="bg-white" v-else>
+  <div v-else class="bg-white">
     <Select/>
     <Button text="Login" @click="login" />
   </div>

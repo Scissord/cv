@@ -1,7 +1,7 @@
 <script setup>
-import { useTheme } from "@store";
+import { useThemeStore } from "@store";
 
-const theme = useTheme();
+const theme = useThemeStore();
 
 const css = {
   header: `
@@ -49,6 +49,12 @@ const css = {
           :class="css.link"
         >
           Auth
+        </router-link>
+        <router-link
+          to="/script"
+          :class="css.link"
+        >
+          Script
         </router-link>
         <router-link
           to="/shop"

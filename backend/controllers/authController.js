@@ -1,17 +1,23 @@
 import bcrypt from 'bcryptjs';
-import * as User from "../models/user.js";
-import * as UserToken from "../models/user_token.js";
-import generateTokens from '../helpers/generateTokens.js';
+import * as User from '#models/user.js';
+import * as UserToken from "#models/user_token.js";
+import generateTokens from '#utils/generateTokens.js';
 import sha256 from 'js-sha256';
+
 
 export const signup = async (req, res) => {
 	try {
-		const { name, phone, password, confirmPassword, gender } = req.body;
+		let { login, password, confirm, gender } = req.body;
 
-		const user = await User.isExist(name, phone);
+    // Trim whitespace from login, password, and confirm
+    login = login.trim();
+    password = password.trim();
+    confirm = confirm.trim();
+
+		const user = await User.isExist(login);
 
 		// Should be in validate function (service)
-		if (password !== confirmPassword) {
+		if (password !== confirm) {
 			return res.status(400).send({ error: "Passwords don't match" });
 		}
 		if (user) {
@@ -26,13 +32,12 @@ export const signup = async (req, res) => {
 		const hashedPassword = await bcrypt.hash(password, salt);
 
 		// https://gravatar.com/
-    const address = String(name).trim().toLowerCase();
+    const address = String(login).trim().toLowerCase();
     const hash = sha256(address);
     const avatar = `https://www.gravatar.com/avatar/${hash}?d=wavatar`;
 
     const newUser = await User.create({
-      name,
-      phone,
+      login,
       password: hashedPassword,
       gender,
 			avatar
@@ -70,9 +75,13 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
 	try {
-		const { name, phone, email, password } = req.body;
+		let { login, password } = req.body;
 
-		const user = await User.findOne(name);
+    // Trim whitespace from login, password, and confirm
+    login = login.trim();
+    password = password.trim();
+
+		const user = await User.findByQuery(login);
 		const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
     if(!user) return res.status(400).send({ error: "This user does not exist" });

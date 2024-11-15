@@ -1,19 +1,21 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-const useTheme = defineStore('user', {
-  state: () => ({
-    theme: localStorage.getItem('theme') || 'light',
-  }),
-  actions: {
-    toggleTheme() {
-      const data = this.theme === 'dark' ? 'light' : 'dark'
-      this.theme = data;
-      localStorage.setItem('theme', data);
-    },
-  },
-  // getters: {
-  //   get: (state) => state.theme,
-  // },
+const useThemeStore = defineStore('theme', () => {
+  // State
+  const theme = ref(localStorage.getItem('theme') || 'light');
+
+  // Actions
+  const toggleTheme = () => {
+    const newTheme = theme.value === 'dark' ? 'light' : 'dark';
+    theme.value = newTheme;
+    localStorage.setItem('theme', newTheme);
+  };
+
+  return {
+    theme,
+    toggleTheme,
+  };
 });
 
-export default useTheme;
+export default useThemeStore;

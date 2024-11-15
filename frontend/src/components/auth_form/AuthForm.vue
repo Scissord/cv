@@ -1,72 +1,37 @@
 <script setup>
 import { ref } from 'vue';
+import { useAuth } from '@hooks';
+import SignIn from './SignIn.vue';
+import SignUp from './SignUp.vue';
 
-const login = ref('');
-const password = ref('');
+const {
+  handleSignIn,
+  handleSignUp,
+} = useAuth();
 
-const handleLogin = () => {
-  console.log('Email:', login.value, 'Password:', password.value);
+const mode = ref('signin');
+
+const handleChangeMode = (val) => {
+  mode.value = val;
 };
 </script>
 
 <template>
   <div class="h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-[70%] h-[80%] flex">
+    <div class="bg-white rounded-xl shadow-md w-[70%] h-[80%] flex">
       <div class="w-1/2 flex items-center justify-center">
         <video src="/video/auth.mp4" muted autoplay loop/>
       </div>
-
-      <form @submit.prevent="handleLogin" class="w-1/2 flex flex-col justify-between">
-        <div class="flex items-center justify-center">
-          <img
-            src="/pics/logo_dark.svg"
-            class="w-12 bg-red-100"
-          />
-        </div>
-        <h1 class="text-4xl font-semibold text-center text-black">
-          Sign In
-        </h1>
-        <!-- Email Field -->
-        <div class="mb-4">
-          <label for="login" class="block text-sm font-medium text-gray-700">
-            Login
-          </label>
-          <input
-            id="login"
-            type="login"
-            v-model="login"
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            placeholder="..."
-            required
-          />
-        </div>
-
-        <!-- Password Field -->
-        <div class="mb-6">
-          <label for="login" class="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            id="password"
-            type="password"
-            v-model="password"
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            placeholder="******"
-            required
-          />
-        </div>
-
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
-        >
-          Submit
-        </button>
-
-        <p class="mt-4 text-sm text-center text-gray-600">
-          Forgot your password?
-          <a href="#" class="text-blue-600 hover:underline">Restore access</a>
-        </p>
-      </form>
+      <SignIn
+        v-if="mode === 'signin'"
+        :handleChangeMode="handleChangeMode"
+        :handleSignIn="handleSignIn"
+      />
+      <SignUp
+        v-else-if="mode === 'signup'"
+        :handleChangeMode="handleChangeMode"
+        :handleSignUp="handleSignUp"
+      />
     </div>
   </div>
 </template>

@@ -1,9 +1,9 @@
 // stores/products.js
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { fetchProducts, createProduct, updateProduct, deleteProduct } from '@/api/productsApi';
 
-const useProducts = defineStore('products', () => {
+const useProductsStore = defineStore('products', () => {
   const limit = ref(10);
   const page = ref(1);
   const search = ref("");
@@ -16,6 +16,7 @@ const useProducts = defineStore('products', () => {
 
   const getProducts = async () => {
     isProductsGetLoading.value = true;
+    // await new Promise(resolve => setTimeout(resolve, 5000));
     try {
       const data = await fetchProducts({ limit: limit.value, page: page.value, search: search.value });
       products.value = data.products;
@@ -72,4 +73,4 @@ const useProducts = defineStore('products', () => {
   };
 });
 
-export default useProducts;
+export default useProductsStore;

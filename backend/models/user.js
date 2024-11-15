@@ -21,11 +21,11 @@ export const update = async function (id, data) {
     .where('id', id)
 };
 
-export const isExist = async function (name, phone) {
+export const isExist = async function (login) {
   return await db('user')
     .select('*')
-    .where('name', name)
-    .orWhere('phone', phone)
+    .where('login', login)
+    .orWhere('phone', login)
     .first();
 };
 
@@ -40,6 +40,14 @@ export const find = async function (id) {
   return await db('user')
    .select('*')
    .where('id', id)
+   .first();
+};
+
+export const findByQuery = async function (query) {
+  return await db('user')
+   .select('*')
+   .where('login', query)
+   .orWhere('phone', query)
    .first();
 };
 

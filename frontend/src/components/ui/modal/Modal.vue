@@ -1,4 +1,5 @@
 <script setup>
+import { Button } from "@components"
 const props = defineProps({
   title: String,
   children: Object
@@ -6,39 +7,17 @@ const props = defineProps({
 
 import { useModalStore } from '@store';
 const modal = useModalStore();
-
 </script>
 
 <template>
-  <div class="modal">
-    <div class="modal-content">
-      <h2>{{ title }}</h2>
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white max-w-lg w-full mx-4 p-6 rounded-lg shadow-lg relative">
+      <h2 class="text-2xl font-semibold mb-4">{{ title }}</h2>
       <component :is="children" />
-      <button @click="modal.hide" class="bg-red-100">Закрыть</button>
+      <Button
+        text="Close"
+        @click="modal.hide"
+      />
     </div>
   </div>
 </template>
-
-<style>
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-</style>

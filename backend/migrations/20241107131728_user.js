@@ -6,8 +6,8 @@ export const up = function(knex) {
   return knex.schema
     .createTable('user', (table) => {
       table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
-      table.string('name', 50).notNullable();
-      table.string('phone', 15).notNullable();
+      table.string('login', 50).notNullable();
+      table.string('phone', 15).nullable();
       table.string('email', 50).nullable();
       table.string('password', 255).notNullable();
       table.tinyint('gender').notNullable();

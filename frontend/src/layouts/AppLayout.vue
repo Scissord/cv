@@ -1,14 +1,12 @@
 <script setup>
+import { useModalStore, useThemeStore } from '@store';
+import { Modal } from '@components';
 import Header from "./app/header/Header.vue";
 import Footer from "./app/footer/Footer.vue";
-import { useTheme } from "@store";
 
-const theme = useTheme();
-
-import { useModalStore } from '@store';
-import { Modal } from '@components';
-
+const theme = useThemeStore();
 const modal = useModalStore();
+
 </script>
 
 <template>

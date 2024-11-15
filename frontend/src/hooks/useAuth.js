@@ -1,26 +1,33 @@
-import { useUser } from '@store';
-import { signup, login, logout } from '@/api/authApi';
+import { useUserStore } from '@store';
+import { useAuthApi } from '@api';
 
-export default function useAuth() {
-  const user = useUser();
+const useAuth = () => {
+  const userStore = useUserStore();
+  const { signup, signin, logout } = useAuthApi();
 
-  const handleSignUp = async () => {
-    user.setUser({ id: 1, name: 'Иван' });
-    user.setToken('abc123');
+  const handleSignUp = async (login, password, confirm, gender) => {
+    await signup({ login, password, confirm, gender });
   };
 
-  const handleLogin = async () => {
-    user.setUser({ id: 1, name: 'Иван' });
-    user.setToken('abc123');
+  const handleSignIn = async (login, password) => {
+    const data = await signin({ login, password });
+    console.log(data);
+    // set To Locale Storage and Pinia
+    // here mistake naxuy
+    console.log(userStore);
+    userStore.setUser(data.user);
+    userStore.setAccessToken(data.accessToken);
   };
 
   const handleLogout = () => {
-    user.clearUser();
+    userStore.clearUser();
   };
 
   return {
     handleSignUp,
-    handleLogin,
+    handleSignIn,
     handleLogout
   }
 };
+
+export default useAuth;

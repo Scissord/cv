@@ -1,14 +1,15 @@
-import useUser from "./userStore";
-import useProducts from "./productsStore";
-import useTheme from './themeStore';
+import useUserStore from "./userStore";
+import useProductsStore from "./productsStore";
+import useThemeStore from './themeStore';
 import useModalStore from './modalStore';
-
+import useNotificationStore from './notificationStore';
 
 export {
   // DATA
-  useUser,
-  useProducts,
+  useUserStore,
+  useProductsStore,
   // UI
-  useTheme,
-  useModalStore
+  useThemeStore,
+  useModalStore,
+  useNotificationStore
 };

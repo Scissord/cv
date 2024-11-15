@@ -1,36 +1,48 @@
 import axios from 'axios';
 import { baseUrl } from '@utils';
+import { useNotificationStore } from '@store';
 
-// Sign Up / Зарегистрироваться
-export const signup = async (data) => {
-  try {
-    const response = await axios({
-      method: 'POST',
-      url: `${baseUrl}/auth/signup`,
-      data
-    });
+const useAuthApi = () => {
+  const notification = useNotificationStore();
 
-    return response.data;
-  } catch (err) {
-    console.log(err);
-    // notification with error here
-  }
+  // SignUp / Зарегистрироваться
+  const signup = async (data) => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/signup`, data, { withCredentials: true });
+      notification.show("Успешно!", "success");
+      return response.data;
+    } catch (err) {
+      handleError(err.response?.data?.error);
+    }
+  };
+
+  // SignIn / Войти
+  const signin = async (data) => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/login`, data, { withCredentials: true });
+      notification.show("Успешно!", "success");
+      return response.data;
+    } catch (err) {
+      handleError(err.response?.data?.error);
+    }
+  };
+
+  // LogOut / Выйти
+  const logout = async (data) => {
+    try {
+      await axios.post(`${baseUrl}/auth/logout`, data, { withCredentials: true });
+      notification.show("Успешно!", "success");
+    } catch (err) {
+      handleError(err.response?.data?.error);
+    }
+  };
+
+  // Обработка ошибки
+  const handleError = (error) => {
+    notification.show(error || 'Что-то пошло не так', 'error');
+  };
+
+  return { signup, signin, logout };
 };
 
-// Log In / Войти
-export const login = async (data) => {
-  await axios({
-    method: 'POST',
-    url: `${baseUrl}/auth/login`,
-    data
-  })
-};
-
-// Log Out / Выйти
-export const logout = async (data) => {
-  await axios({
-    method: 'POST',
-    url: `${baseUrl}/auth/logout`,
-    data
-  })
-};
+export default useAuthApi;
