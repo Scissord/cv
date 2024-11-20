@@ -1,18 +1,15 @@
 <script setup>
-import { Loader, Button, Select } from '@components';
-import { useAuth } from '@hooks';
-import { useUserStore, useProductsStore } from '@store';
 import { onMounted } from 'vue';
-import ProductCard from './blocks/ProductCard';
+import { useRouter } from 'vue-router';
+import { Loader, Button } from '@components';
+import { useUserStore, useProductsStore } from '@store';
+import ProductsFilters from './blocks/ProductsFilters.vue';
+import ProductsGrid from './blocks/ProductsGrid.vue';
+
+const router = useRouter();
 
 const userStore = useUserStore();
 const productsStore = useProductsStore();
-
-const { login, logout } = useAuth();
-
-const handleProductClick = (title) => {
-  alert(`Кнопка нажата! ${title}`);
-};
 
 onMounted(() => {
   productsStore.getProducts();
@@ -20,38 +17,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="userStore.isAuthenticated" class="p-8">
+  <div v-if="userStore.isAuthenticated">
     <Loader v-if="productsStore.isProductsGetLoading"/>
-    <div v-else class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      <ProductCard
-        v-for="product in productsStore.products"
-        :key="product.id"
-        :product="product"
-        @click="handleProductClick"
+
+    <div v-else class="container mx-auto py-6 flex flex-col gap-3">
+      <ProductsFilters />
+      <ProductsGrid
+        :products="productsStore.products"
       />
     </div>
+
   </div>
-  <div v-else class="bg-white">
-    <Select/>
-    <Button text="Login" @click="login" />
+  <div v-else class="bg-white h-[30vh] flex flex-col items-center justify-center gap-3">
+    <p class="font-semibold text-2xl">Please login to see Shop</p>
+    <Button text="Login" @click="router.push('/auth')" />
   </div>
 </template>
 
 <style scoped>
-:root {
-  --vs-controls-color: #664cc3;
-  --vs-border-color: #664cc3;
-
-  --vs-dropdown-bg: #282c34;
-  --vs-dropdown-color: #cc99cd;
-  --vs-dropdown-option-color: #cc99cd;
-
-  --vs-selected-bg: #664cc3;
-  --vs-selected-color: #eeeeee;
-
-  --vs-search-input-color: #eeeeee;
-
-  --vs-dropdown-option--active-bg: #664cc3;
-  --vs-dropdown-option--active-color: #eeeeee;
-}
 </style>

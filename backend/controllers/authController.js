@@ -112,9 +112,9 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
 	try {
-		res.cookie("refreshToken", "", { maxAge: 0 })
-
-		res.status(200).send({ message: "Successfully logout" });
+    res.cookie("refreshToken", "", { maxAge: 0 })
+    console.log('logout successfully')
+		res.status(200).send({ status: "ok", message: "Successfully logout" });
 	}	catch (err) {
 		console.log("Error in logout controller", err.message);
 		res.status(500).send({ error: "Internal Server Error" });

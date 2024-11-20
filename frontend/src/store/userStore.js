@@ -3,12 +3,12 @@ import { ref, computed } from 'vue';
 
 const useUserStore = defineStore('user', () => {
   // State
-  const user = ref(JSON.parse(localStorage.getItem('user')) || null);
+  const data = ref(JSON.parse(localStorage.getItem('user')) || null);
   const accessToken = ref(localStorage.getItem('accessToken') || null);
 
   // Actions
   function setUser(userData) {
-    user.value = userData;
+    data.value = userData;
     localStorage.setItem('user', JSON.stringify(userData));
   }
 
@@ -18,7 +18,7 @@ const useUserStore = defineStore('user', () => {
   }
 
   function clearUser() {
-    user.value = null;
+    data.value = null;
     accessToken.value = null;
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
@@ -27,7 +27,7 @@ const useUserStore = defineStore('user', () => {
   const isAuthenticated = computed(() => !!accessToken.value);
 
   return {
-    user,
+    data,
     accessToken,
     setUser,
     setAccessToken,

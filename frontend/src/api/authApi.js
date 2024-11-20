@@ -30,8 +30,9 @@ const useAuthApi = () => {
   // LogOut / Выйти
   const logout = async (data) => {
     try {
-      await axios.post(`${baseUrl}/auth/logout`, data, { withCredentials: true });
+      const response = await axios.post(`${baseUrl}/auth/logout`, data, { withCredentials: true });
       notification.show("Успешно!", "success");
+      return response.data;
     } catch (err) {
       handleError(err.response?.data?.error);
     }
@@ -39,7 +40,7 @@ const useAuthApi = () => {
 
   // Обработка ошибки
   const handleError = (error) => {
-    notification.show(error || 'Что-то пошло не так', 'error');
+    notification.show(error || 'Что-то пошло не так!', 'error');
   };
 
   return { signup, signin, logout };

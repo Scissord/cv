@@ -7,6 +7,7 @@ import Button from "./ui/button/Button.vue";
 import Select from "./ui/select/Select.vue";
 import Input from './ui/input/Input.vue';
 import Modal from "./ui/modal/Modal.vue";
+import Search from "./ui/search/Search.vue";
 
 export {
   AuthForm,
@@ -14,5 +15,6 @@ export {
   Button,
   Select,
   Modal,
-  Input
+  Input,
+  Search
 }

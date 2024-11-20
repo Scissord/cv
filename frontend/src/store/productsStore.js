@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { fetchProducts, createProduct, updateProduct, deleteProduct } from '@/api/productsApi';
 
 const useProductsStore = defineStore('products', () => {
-  const limit = ref(10);
+  const limit = ref(16);
   const page = ref(1);
   const search = ref("");
 

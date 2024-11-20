@@ -1,22 +1,30 @@
 <script setup>
-import { ref } from "vue";
 import vSelect from "vue-select";
 import 'vue-select/dist/vue-select.css';
 
-const type = ref(2);
-const types = [
-  { value: 0, label: "da" },
-  { value: 1, label: "net" },
-  { value: 2, label: "poxuy" },
-];
+const props = defineProps({
+  value: [String, Number],
+  onChange: Function,
+  placeholder: String,
+  options: {
+    type: Array,
+    default: () => [],
+  },
+  label: String,
+  multiple: Boolean,
+});
+
 </script>
 
 <template>
   <vSelect
-    v-model="type"
-    :reduce="(option) => option.value"
-    :options="types"
-    label="label"
+    :value="value"
+    :reduce="(option) => onChange(option)"
+    :options="options"
+    :label="label ? label : 'label'"
+    :placeholder="placeholder ? placeholder : 'Select'"
+    class="min-w-[100px]"
+    :multiple="multiple"
   />
 </template>
 
@@ -30,11 +38,11 @@ const types = [
   /* Search Input */
   --vs-search-input-color: inherit;
   --vs-search-input-bg: rgb(255, 255, 255);
-  --vs-search-input-placeholder-color: inherit;
+  --vs-search-input-placeholder-color: #94a3b8;
 
   /* Font */
-  --vs-font-size: 1rem;
-  --vs-line-height: 1.4;
+  --vs-font-size: 0.875rem;
+  --vs-line-height: 1.25;
 
   /* Disabled State */
   --vs-state-disabled-bg: rgb(248, 248, 248);
@@ -43,17 +51,17 @@ const types = [
   --vs-state-disabled-cursor: not-allowed;
 
   /* Borders */
-  --vs-border-color: var(--vs-colors--lightest);
+  --vs-border-color: #94a3b8;
   --vs-border-width: 1px;
   --vs-border-style: solid;
-  --vs-border-radius: 4px;
+  --vs-border-radius: 0.375rem;
 
   /* Actions: house the component controls */
   --vs-actions-padding: 4px 6px 0 3px;
 
   /* Component Controls: Clear, Open Indicator */
-  --vs-controls-color: var(--vs-colors--light);
-  --vs-controls-size: 1;
+  --vs-controls-color: #94a3b8;
+  --vs-controls-size: 0.7;
   --vs-controls--deselect-text-shadow: 0 1px 0 #fff;
 
   /* Selected */
@@ -66,7 +74,7 @@ const types = [
   /* Dropdown */
   --vs-dropdown-bg: #fff;
   --vs-dropdown-color: inherit;
-  --vs-dropdown-z-index: 1000;
+  --vs-dropdown-z-index: 1;
   --vs-dropdown-min-width: 160px;
   --vs-dropdown-max-height: 350px;
   --vs-dropdown-box-shadow: 0px 3px 6px 0px var(--vs-colors--darkest);

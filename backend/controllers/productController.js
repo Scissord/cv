@@ -1,18 +1,16 @@
 import axios from 'axios';
-import * as Product from '../models/product.js'
-import * as ProductCategory from '../models/product_category.js';
-import * as ProductBrand from '../models/product_brand.js';
-import * as ProductTags from '../models/product_tag.js';
-import * as PivotProductTags from '../models/pivot_product_tags.js';
-import * as ProductReview from '../models/product_review.js';
-import * as ProductImage from '../models/product_image.js';
+import * as Product from '#models/product.js'
+import * as ProductCategory from '#models/product_category.js';
+import * as ProductBrand from '#models/product_brand.js';
+import * as ProductTags from '#models/product_tag.js';
+import * as PivotProductTags from '#models/pivot_product_tags.js';
+import * as ProductReview from '#models/product_review.js';
+import * as ProductImage from '#models/product_image.js';
 
 export const get = async (req, res) => {
 	try {
     const { limit, page, search } = req.query;
     const { products, total } = await Product.get(limit, page, search);
-
-    console.log(products, total);
 
 		res.status(200).send({ message: 'ok', products, total });
 	}	catch (err) {
@@ -23,8 +21,10 @@ export const get = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
+    const data = req.body;
+    const product = await Product.create(data);
 
-    return res.status(200).send({ message: 'ok' });
+    return res.status(200).send({ message: 'ok', product });
   }	catch (err) {
 		console.log("Error in create user controller", err.message);
 		res.status(500).send({ error: "Internal Server Error" });
@@ -33,8 +33,11 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
+    const product_id = req.params;
+    const data = req.body;
+    const product = await Product.update(product_id, data);
 
-		res.status(200).send({ message: 'ok' });
+		res.status(200).send({ message: 'ok', product });
 	}	catch (err) {
 		console.log("Error in update user controller", err.message);
 		res.status(500).send({ error: "Internal Server Error" });
@@ -43,6 +46,8 @@ export const update = async (req, res) => {
 
 export const destroy = async (req, res) => {
   try {
+    const product_id = req.params;
+    await Product.destroy(product_id);
 
 		res.status(200).send({ message: 'ok' });
 	}	catch (err) {

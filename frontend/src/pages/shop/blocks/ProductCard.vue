@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { Button } from '@components';
 
 const props = defineProps({
@@ -8,23 +9,38 @@ const props = defineProps({
   },
 });
 
+const isExpanded = ref(false);
+
+const toggleDescription = () => {
+  isExpanded.value = !isExpanded.value;
+};
+
 const emit = defineEmits(['click']);
 const handleClick = () => {
   emit('click', props.product.title);
 };
 
+console.log(props.product);
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col gap-3 items-center border-slate-200 border">
     <img
-      :src="product.link || 'https://via.placeholder.com/150'"
+      :src="product.thumbnail || 'https://via.placeholder.com/150'"
       alt="Product image"
-      class="w-full h-40 object-cover bg-cover rounded-md mb-4"
+      class="object-cover bg-cover"
     />
-    <h2 class="text-xl font-semibold mb-2">{{ product.title }}</h2>
-    <p class="text-gray-600 mb-4">{{ product.description }}</p>
-    <span class="text-lg font-bold text-green-500 mb-4">
+    <h2 class="text-xl font-semibold line-clamp-1">{{ product.id }}. {{ product.title }}</h2>
+    <p v-if="!isExpanded" class="line-clamp-3 text-justify">
+      {{ product.description }}
+    </p>
+    <p v-if="isExpanded" class="text-justify">
+      {{ product.description }}
+    </p>
+    <button @click="toggleDescription" class="text-blue-500">
+      {{ isExpanded ? 'Read less' : 'Read more' }}
+    </button>
+    <span class="text-lg font-bold text-green-500">
       {{ product.price }}
     </span>
     <Button text="Add to Cart" @click="handleClick" />

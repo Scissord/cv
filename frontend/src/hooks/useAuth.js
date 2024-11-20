@@ -11,16 +11,16 @@ const useAuth = () => {
 
   const handleSignIn = async (login, password) => {
     const data = await signin({ login, password });
-    console.log(data);
     // set To Locale Storage and Pinia
-    // here mistake naxuy
-    console.log(userStore);
     userStore.setUser(data.user);
     userStore.setAccessToken(data.accessToken);
   };
 
-  const handleLogout = () => {
-    userStore.clearUser();
+  const handleLogout = async () => {
+    const data = await logout();
+    if(data.status === "ok") {
+      userStore.clearUser();
+    }
   };
 
   return {
