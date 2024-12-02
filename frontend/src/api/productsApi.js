@@ -17,7 +17,7 @@ const useProductsApi = () => {
         params.append('search', search);
       }
 
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      // await new Promise(resolve => setTimeout(resolve, 5000));
 
       const response = await axios({
         method: 'GET',
