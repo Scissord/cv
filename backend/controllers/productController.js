@@ -10,6 +10,8 @@ import * as ProductImage from '#models/product_image.js';
 export const get = async (req, res) => {
 	try {
     const { limit, page, search } = req.query;
+    console.log('fetching products');
+
     const { products, total } = await Product.get(limit, page, search);
 
 		res.status(200).send({ message: 'ok', products, total });
