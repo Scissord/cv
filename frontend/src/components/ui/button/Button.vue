@@ -28,6 +28,8 @@ defineProps({
 
 <style>
 .button {
+  min-height: 30px;
+  min-width: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,7 +37,7 @@ defineProps({
   padding: 8px 15px;
   color: #fff;
   background-color: var(--primary-color);
-  border-radius: 50px;
+  border-radius: 9999px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
   font-size: 16px;
   overflow: hidden;

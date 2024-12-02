@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useUserStore, useThemeStore } from "@store";
 import { useAuth } from "@hooks";
 
 const user = useUserStore();
 const theme = useThemeStore();
 const router = useRouter();
+const route = useRoute();
 
 const { handleLogout } = useAuth();
 
@@ -81,6 +82,7 @@ const css = {
           />
         </router-link>
         <router-link
+          v-if="!user.isAuthenticated"
           to="/auth"
           :class="css.link"
         >
@@ -112,6 +114,11 @@ const css = {
           :icon="theme.theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun'"
           :class="css.link"
           @click="theme.toggleTheme"
+        />
+        <Icon
+          v-if="route.path === '/shop'"
+          :icon="['fas', 'cart-shopping']"
+          :class="css.link"
         />
         <div v-if="user.isAuthenticated" :class="css.userMenuWrapper">
           <img

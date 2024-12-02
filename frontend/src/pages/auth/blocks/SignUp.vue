@@ -1,17 +1,14 @@
 <script setup>
 import { ref } from 'vue';
-import { Button, Input } from '@components';
-import { useRouter } from 'vue-router';
-const props = defineProps({
-  handleSignIn: { type: Function },
+defineProps({
+  handleSignUp: { type: Function },
   handleChangeMode: { type: Function }
 })
 
-const router = useRouter();
-
 const login = ref('');
 const password = ref('');
-
+const confirm_password = ref('');
+const gender = ref(0);
 </script>
 
 <template>
@@ -24,7 +21,7 @@ const password = ref('');
         />
       </div>
       <h1 class="text-4xl font-semibold text-center">
-        Sign In
+        Sign Out
       </h1>
     </div>
 
@@ -52,6 +49,26 @@ const password = ref('');
           required
         />
       </div>
+
+      <div>
+        <label for="confirm_password" class="block text-sm font-medium">Confirm password</label>
+        <Input
+          id="confirm_password"
+          type="password"
+          v-model="confirm_password"
+          placeholder="******"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <label>
+        <input type="radio" v-model="gender" :value="0"> Мужчина
+      </label>
+      <label>
+        <input type="radio" v-model="gender" :value="1"> Женщина
+      </label>
     </div>
 
     <Button
@@ -59,8 +76,8 @@ const password = ref('');
       text="Submit"
       className="rounded-lg w-full bg-blue-500 focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 hover:bg-blue-700"
       @click="async () => {
-        await handleSignIn(login, password);
-        router.push('/shop');
+        await handleSignUp(login, password, confirm_password, gender);
+        handleChangeMode('signin');
       }"
     />
 
@@ -70,9 +87,9 @@ const password = ref('');
         <a href="#" class="text-blue-600 hover:underline">Restore access</a>
       </p>
       <p class="text-sm text-center text-gray-600">
-        Don't have account yet?
+        Already has an account?
       <a
-        @click="handleChangeMode('signup')"
+        @click="handleChangeMode('signin')"
         href="#" class="text-blue-600 hover:underline"
       >
         Sign Up

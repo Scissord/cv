@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   id: {
-    type: String,
+    type: [String, Number],
     required: false,
     default: ''
   },
@@ -11,7 +11,7 @@ defineProps({
     default: 'text'
   },
   modelValue: {
-    type: String,
+    type: [String, Number, null],
     required: true
   },
   placeholder: {
@@ -19,15 +19,14 @@ defineProps({
     required: false,
     default: '...'
   },
-  className: {
-    type: String,
-    required: false,
-    default: ''
-  },
   required: {
     type: Boolean,
     required: false,
     default: false
+  },
+  onBlur: {
+    type: Function,
+    required: false
   }
 });
 
@@ -43,17 +42,18 @@ const onInput = (event) => {
     :id="id"
     :type="type"
     :value="modelValue"
-    @input="onInput($event)"
-    :class="['input', className]"
     :placeholder="placeholder"
     :required="required"
+    class='input'
+    @input="onInput($event)"
+    @blur="onBlur"
   />
 </template>
 
 <style>
 .input {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   font-size: 1rem;
   border-radius: 0.375rem;
   border: 2px solid #ccc;

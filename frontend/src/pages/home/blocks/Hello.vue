@@ -1,5 +1,4 @@
 <script setup>
-import { Button } from "@components"
 import { useModalStore } from '@store';
 import Dick from './Dick';
 const modal = useModalStore()

@@ -1,6 +1,7 @@
 <script setup>
-import { AuthForm } from "@components";
 import { useRouter } from 'vue-router';
+import AuthForm from "./blocks/AuthForm.vue";
+
 const router = useRouter();
 </script>
 

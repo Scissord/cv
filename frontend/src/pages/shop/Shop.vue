@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { Loader, Button } from '@components';
 import { useUserStore, useProductsStore } from '@store';
 import ProductsFilters from './blocks/ProductsFilters.vue';
 import ProductsGrid from './blocks/ProductsGrid.vue';
@@ -28,7 +27,7 @@ onMounted(() => {
     </div>
 
   </div>
-  <div v-else class="bg-white h-[30vh] flex flex-col items-center justify-center gap-3">
+  <div v-else class="bg-white min-h-[50vh] flex flex-col items-center justify-center gap-3">
     <p class="font-semibold text-2xl">Please login to see Shop</p>
     <Button text="Login" @click="router.push('/auth')" />
   </div>

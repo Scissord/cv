@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { Button } from '@components';
 
 const props = defineProps({
   product: {

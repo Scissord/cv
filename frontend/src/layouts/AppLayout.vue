@@ -1,6 +1,5 @@
 <script setup>
 import { useModalStore, useThemeStore } from '@store';
-import { Modal } from '@components';
 import Header from "./app/header/Header.vue";
 import Footer from "./app/footer/Footer.vue";
 

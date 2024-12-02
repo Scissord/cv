@@ -1,5 +1,4 @@
 <script setup>
-import { Button } from "@components"
 const props = defineProps({
   title: String,
   children: Object
