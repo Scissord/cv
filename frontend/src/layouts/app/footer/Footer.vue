@@ -29,7 +29,7 @@ const css = {
 </script>
 
 <template>
-  <footer class="flex items-center justify-center bg-zinc-900 text-white bg-opacity-75 py-12">
+  <footer class="flex items-center justify-center bg-zinc-900 text-white bg-opacity-90 py-12">
     <div class="container grid grid-cols-6 gap-6">
       <div class="col-span-2 flex flex-col gap-6">
         <div class="flex items-center">

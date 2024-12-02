@@ -1,5 +1,5 @@
 <script setup>
-import ProductCard from './ProductCard';
+import ProductCard from './ProductsGrid/ProductCard.vue';
 
 defineProps({
   products: Array,

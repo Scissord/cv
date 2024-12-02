@@ -1,5 +1,5 @@
 import useUserStore from "./userStore";
-import useProductsStore from "./productsStore";
+import useCartStore from "./cartStore";
 import useThemeStore from './themeStore';
 import useModalStore from './modalStore';
 import useNotificationStore from './notificationStore';
@@ -7,7 +7,7 @@ import useNotificationStore from './notificationStore';
 export {
   // DATA
   useUserStore,
-  useProductsStore,
+  useCartStore,
   // UI
   useThemeStore,
   useModalStore,

@@ -26,7 +26,7 @@ const css = {
     sticky top-0 w-full z-30
     h-[6vh] flex items-center
     justify-center bg-zinc-900
-    text-white bg-opacity-75
+    text-white bg-opacity-90
   `,
   container: `
     h-full container mx-auto

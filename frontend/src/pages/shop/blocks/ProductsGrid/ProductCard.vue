@@ -19,7 +19,7 @@ const handleClick = () => {
   emit('click', props.product.title);
 };
 
-console.log(props.product);
+// console.log(props.product);
 </script>
 
 <template>

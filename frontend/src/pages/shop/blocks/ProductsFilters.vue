@@ -1,7 +1,11 @@
 <script setup>
-import { reactive, watch } from "vue";
+import { ref, watch } from "vue";
 
-const type = reactive({ value: 2, label: 'poxuy' });
+defineProps({
+  search: { type: String, required: true }
+})
+
+const type = ref({ value: 2, label: "poxuy" },);
 const types = [
   { value: 0, label: "da" },
   { value: 1, label: "net" },
@@ -19,8 +23,10 @@ watch(type, (newVal, oldVal) => {
       v-model="type"
       :options="types"
       :reduce="(option) => option"
-      class="w-fit"
+      class="w-fit min-w-[150px]"
     />
-    <Search />
+    <!-- <Search
+      v-model="search"
+    /> -->
   </div>
 </template>
