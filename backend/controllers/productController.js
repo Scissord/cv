@@ -8,17 +8,59 @@ import * as ProductReview from '#models/product_review.js';
 import * as ProductImage from '#models/product_image.js';
 
 export const get = async (req, res) => {
-	try {
-    const { limit, page, search } = req.query;
-    console.log('fetching products');
+  try {
+    const {
+      limit,
+      page,
+      search,
+      sort_by,
+      order_by,
+      category_ids,
+      brand_ids,
+      tag_ids
+    } = req.query;
 
-    const { products, total } = await Product.get(limit, page, search);
+    // console.log('fetching products', sort);
 
-		res.status(200).send({ message: 'ok', products, total });
-	}	catch (err) {
-		console.log("Error in get user controller", err.message);
-		res.status(500).send({ error: "Internal Server Error" });
-	};
+    const { products, lastPage, pages } = await Product.get(
+      limit,
+      page,
+      search,
+      sort_by,
+      order_by,
+      category_ids,
+      brand_ids,
+      tag_ids
+    );
+
+    res.status(200).send({
+      message: 'ok',
+      products,
+      lastPage,
+      pages
+    });
+  } catch (err) {
+    console.log("Error in get user controller", err.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  };
+};
+
+export const getFilters = async (req, res) => {
+  try {
+    const brands = await ProductBrand.get();
+    const categories = await ProductCategory.get();
+    const tags = await ProductTags.get();
+
+    res.status(200).send({
+      message: 'ok',
+      brands,
+      categories,
+      tags
+    });
+  } catch (err) {
+    console.log("Error in get user controller", err.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  };
 };
 
 export const create = async (req, res) => {
@@ -27,10 +69,10 @@ export const create = async (req, res) => {
     const product = await Product.create(data);
 
     return res.status(200).send({ message: 'ok', product });
-  }	catch (err) {
-		console.log("Error in create user controller", err.message);
-		res.status(500).send({ error: "Internal Server Error" });
-	};
+  } catch (err) {
+    console.log("Error in create user controller", err.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  };
 };
 
 export const update = async (req, res) => {
@@ -39,11 +81,11 @@ export const update = async (req, res) => {
     const data = req.body;
     const product = await Product.update(product_id, data);
 
-		res.status(200).send({ message: 'ok', product });
-	}	catch (err) {
-		console.log("Error in update user controller", err.message);
-		res.status(500).send({ error: "Internal Server Error" });
-	};
+    res.status(200).send({ message: 'ok', product });
+  } catch (err) {
+    console.log("Error in update user controller", err.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  };
 };
 
 export const destroy = async (req, res) => {
@@ -51,11 +93,11 @@ export const destroy = async (req, res) => {
     const product_id = req.params;
     await Product.destroy(product_id);
 
-		res.status(200).send({ message: 'ok' });
-	}	catch (err) {
-		console.log("Error in destroy user controller", err.message);
-		res.status(500).send({ error: "Internal Server Error" });
-	};
+    res.status(200).send({ message: 'ok' });
+  } catch (err) {
+    console.log("Error in destroy user controller", err.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  };
 };
 
 export const fetchProducts = async (req, res) => {
@@ -68,7 +110,7 @@ export const fetchProducts = async (req, res) => {
     for (const product of response.data.products) {
       const category_id = await ProductCategory.getCategoryIdByName(product.category);
       let brand_id = 1;
-      if(product.brand) {
+      if (product.brand) {
         brand_id = await ProductBrand.getBrandIdByName(product.brand);
       };
 
@@ -96,10 +138,10 @@ export const fetchProducts = async (req, res) => {
         thumbnail: product.thumbnail,
       });
 
-      for(const tag of product.tags) {
+      for (const tag of product.tags) {
         // find tag if it exists
         let t = await ProductTags.find({ name: tag });
-        if(!t) {
+        if (!t) {
           t = await ProductTags.create({
             name: tag
           });
@@ -110,7 +152,7 @@ export const fetchProducts = async (req, res) => {
         });
       };
 
-      for(const review of product.reviews) {
+      for (const review of product.reviews) {
         await ProductReview.create({
           product_id: p.id,
           rating: review.rating,
@@ -121,7 +163,7 @@ export const fetchProducts = async (req, res) => {
         })
       };
 
-      for(const image of product.images) {
+      for (const image of product.images) {
         await ProductImage.create({
           product_id: p.id,
           link: image
@@ -134,6 +176,6 @@ export const fetchProducts = async (req, res) => {
     res.status(200).send({ message: 'ok' });
   } catch (err) {
     console.log("Error in fetchProducts product controller", err.message);
-		res.status(500).send({ error: "Internal Server Error" });
+    res.status(500).send({ error: "Internal Server Error" });
   };
-} ;
+};

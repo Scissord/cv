@@ -2,7 +2,16 @@ import knex from './knex.js';
 
 const db = knex();
 
-export const get = async function (limit, page, search) {
+export const get = async function(
+  limit,
+  page,
+  search,
+  sort_by,
+  order_by,
+  category_ids,
+  brand_ids,
+  tag_ids
+) {
   const result = await db('product as p')
     .select(
       'p.*',
@@ -18,25 +27,64 @@ export const get = async function (limit, page, search) {
     .leftJoin('product_review as pr', 'pr.product_id', 'p.id')
     .leftJoin('pivot_product_tags as ppt', 'ppt.product_id', 'p.id')
     .leftJoin('product_tag as pt', 'pt.id', 'ppt.tag_id')
-    .where((q) => {
-      if (search) {
-        q.where('p.title', 'ilike', `%${search}%`)
-      }
-    })
     .groupBy('p.id', 'pc.name', 'pb.name')
+    .modify((qb) => {
+      if (search) {
+        qb.where('p.title', 'ilike', `%${search}%`)
+      };
+      if (sort_by && order_by) {
+        const allowedFields = ['price', 'rating'];
+        const allowedOrders = ['asc', 'desc'];
+
+        if (allowedFields.includes(sort_by) && allowedOrders.includes(order_by)) {
+          qb.orderBy(`p.${sort_by}`, order_by);
+        }
+      };
+      if (category_ids) {
+        qb.whereIn('p.category_id', JSON.parse(category_ids));
+      };
+      if (brand_ids) {
+        qb.whereIn('p.brand_id', JSON.parse(brand_ids));
+      };
+      if (tag_ids) {
+        qb.whereIn('p.tag_id', JSON.parse(tag_ids));
+      };
+    })
     .paginate({
       perPage: limit,
       currentPage: page,
       isLengthAware: true
     });
 
+  const { lastPage, currentPage } = result.pagination;
+
+  const current = parseInt(currentPage, 10);
+  const last = parseInt(lastPage, 10);
+  const maxPagesToShow = 4;
+
+  let pages = [];
+
+  if (last <= maxPagesToShow) {
+    pages = Array.from({ length: last }, (_, i) => i + 1);
+  } else {
+    if (current <= Math.ceil(maxPagesToShow / 2)) {
+      pages = Array.from({ length: maxPagesToShow }, (_, i) => i + 1);
+    } else if (current >= last - Math.floor(maxPagesToShow / 2)) {
+      pages = Array.from({ length: maxPagesToShow }, (_, i) => last - (maxPagesToShow - 1) + i);
+    } else {
+      const startPage = current - Math.floor(maxPagesToShow / 2);
+      pages = Array.from({ length: maxPagesToShow }, (_, i) => startPage + i);
+    }
+  }
+
   return {
     products: result.data,
-    total: result.pagination.total
+    lastPage,
+    pages
   };
 };
 
-export const create = async function (data) {
+export const create = async function(data) {
   const [product] = await db("product")
     .insert(data)
     .returning("id")
@@ -45,7 +93,7 @@ export const create = async function (data) {
   return data;
 };
 
-export const update = async function (id, data) {
+export const update = async function(id, data) {
   const [product] = await db("product")
     .where('id', id)
     .update(data)
@@ -54,7 +102,7 @@ export const update = async function (id, data) {
   return product;
 };
 
-export const destroy = async function (id) {
+export const destroy = async function(id) {
   await db("product")
     .del()
     .where("id", id)
