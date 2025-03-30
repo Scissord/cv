@@ -1,60 +1,94 @@
+import { reactive, watch } from 'vue';
 import { useProductsApi } from '@api';
 
 const useProducts = () => {
-  const {
-    getProducts,
-    createProduct,
-    updateProduct,
-    deleteProduct
-  } = useProductsApi();
+  const { getProducts, getFilters } = useProductsApi();
 
-  const fetchProducts = async (limit, page, search) => {
-    const products = await getProducts(limit, page, search);
-    return products;
+  const state = reactive({
+    isProductsGetLoading: false,
+    isFiltersGetLoading: false,
+    limit: 12,
+    page: 1,
+    lastPage: null,
+    pages: [],
+    search: '',
+    sort: {},
+    products: [],
+    categories: [],
+    brands: [],
+    tags: [],
+  });
+
+  const handlePageClick = (newPage) => {
+    state.page = newPage;
   };
 
-  // add
-  // upgrade
-  // destroy
+  const handleChangeSort = (val, obj) => {
+    state.sort = obj;
+  };
 
-  // const addProduct = async (product, token) => {
-  //   try {
-  //     const newProduct = await createProduct(product, token);
-  //     products.value.push(newProduct);
-  //   } catch (err) {
-  //     error.value = 'Ошибка при добавлении продукта: ' + err.message;
-  //     console.error(error.value);
-  //   }
-  // };
+  const handleChangeSearch = (val) => {
+    state.search = val;
+  };
 
-  // const updateProductData = async (productId, product, token) => {
-  //   try {
-  //     const updatedProduct = await updateProduct(productId, product, token);
-  //     const index = products.value.findIndex(p => p.id === productId);
-  //     if (index !== -1) {
-  //       products.value[index] = updatedProduct;
-  //     }
-  //   } catch (err) {
-  //     error.value = 'Ошибка при обновлении продукта: ' + err.message;
-  //     console.error(error.value);
-  //   }
-  // };
+  const handleGetFilters = async () => {
+    const data = await getFilters();
+    state.brands.splice(0, state.brands.length, ...data.brands.map((brand) => ({
+      ...brand,
+      is_checked: false
+    })));
+    state.categories.splice(0, state.categories.length, ...data.categories.map((category) => ({
+      ...category,
+      is_checked: false
+    })));
+    state.tags.splice(0, state.tags.length, ...data.tags.map((tag) => ({
+      ...tag,
+      is_checked: false
+    })));
+  };
 
-  // const deleteProductData = async (productId, token) => {
-  //   try {
-  //     await deleteProduct(productId, token);
-  //     products.value = products.value.filter(p => p.id !== productId);
-  //   } catch (err) {
-  //     error.value = 'Ошибка при удалении продукта: ' + err.message;
-  //     console.error(error.value);
-  //   }
-  // };
+  const handleGetProducts = async () => {
+    state.isProductsGetLoading = true;
+    const data = await getProducts(
+      state.limit,
+      state.page,
+      state.search,
+      state.sort.sort_by,
+      state.sort.order_by,
+      state.categories,
+      state.brands,
+      state.tags
+    );
+    state.products.splice(0, state.products.length, ...data.products);
+    state.lastPage = data.lastPage;
+    state.pages = data.pages;
+    state.isProductsGetLoading = false;
+  };
+
+  watch(
+    () => [
+      state.limit,
+      state.page,
+      state.search,
+      state.sort.sort_by,
+      state.sort.order_by,
+      state.categories,
+      state.brands,
+      state.tags
+    ],
+    async () => {
+      await handleGetProducts();
+    },
+    { deep: true }
+  );
 
   return {
-    fetchProducts,
-    // addProduct,
-    // updateProductData,
-    // deleteProductData,
+    state,
+    handlePageClick,
+    handleChangeSort,
+    handleChangeSearch,
+    handleGetFilters,
+    handleGetProducts,
   };
 };
 

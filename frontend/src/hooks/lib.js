@@ -1,6 +1,9 @@
-import useAuth from "./useAuth";
-import useProducts from './useProducts';
+// OVERALL
+import useLocalStorage from "./useLocalStorage";
+// PAGES
+import useProducts from "./useProducts";
 
 export {
-  useAuth, useProducts
+  useLocalStorage,
+  useProducts
 };

@@ -1,13 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import { useAuth } from '@hooks';
 import SignIn from './SignIn.vue';
 import SignUp from './SignUp.vue';
-
-const {
-  handleSignIn,
-  handleSignUp,
-} = useAuth();
 
 const mode = ref('signin');
 
@@ -25,12 +19,10 @@ const handleChangeMode = (val) => {
       <SignIn
         v-if="mode === 'signin'"
         :handleChangeMode="handleChangeMode"
-        :handleSignIn="handleSignIn"
       />
       <SignUp
         v-else-if="mode === 'signup'"
         :handleChangeMode="handleChangeMode"
-        :handleSignUp="handleSignUp"
       />
     </div>
   </div>

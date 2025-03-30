@@ -1,24 +1,33 @@
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useUserStore, useThemeStore } from "@store";
-import { useAuth } from "@hooks";
+import {
+  useUserStore,
+  useThemeStore,
+  useCartStore
+} from "@store";
+import { useAuthApi } from "@api";
+import Cart from "./blocks/Cart.vue";
 
 const user = useUserStore();
 const theme = useThemeStore();
+const cart = useCartStore();
 const router = useRouter();
 const route = useRoute();
 
-const { handleLogout } = useAuth();
+const { logout } = useAuthApi();
 
+const isDrawerOpen = reactive({
+  value: false,
+});
 const isUserMenuOpen = ref(false);
 
-const showUserMenu = () => {
-  isUserMenuOpen.value = true;
+const toggleDrawer = () => {
+  isDrawerOpen.value = !isDrawerOpen.value;
 };
 
-const hideUserMenu = () => {
-  isUserMenuOpen.value = false;
+const toggleUserMenu = () => {
+  isUserMenuOpen.value = !isUserMenuOpen.value;
 };
 
 const css = {
@@ -30,7 +39,7 @@ const css = {
   `,
   container: `
     h-full container mx-auto
-    px-40 flex items-center
+    flex items-center
     justify-between
   `,
   logo: `
@@ -39,7 +48,7 @@ const css = {
   nav: `
     flex items-center
     justify-around
-    gap-8 text-sm
+    gap-5 text-sm
     w-full
   `,
   link: `
@@ -70,9 +79,15 @@ const css = {
 </script>
 
 <template>
+  <Drawer
+    :isDrawerOpen="isDrawerOpen"
+    :toggleDrawer="toggleDrawer"
+  >
+    <Cart/>
+  </Drawer>
   <header :class="css.header">
     <div :class="css.container">
-      <nav :class="css.nav">
+      <nav :class="css.nav" style="font-family: monospace;">
         <router-link
           to="/"
         >
@@ -115,30 +130,42 @@ const css = {
           :class="css.link"
           @click="theme.toggleTheme"
         />
-        <Icon
+        <div
           v-if="route.path === '/shop'"
-          :icon="['fas', 'cart-shopping']"
-          :class="css.link"
-        />
+          class="relative"
+          @click="toggleDrawer"
+        >
+          <Icon
+            :icon="['fas', 'cart-shopping']"
+            :class="css.link"
+          />
+          <div
+            v-if="cart.data.total_quantity > 0"
+            class="absolute top-[-10px] right-[-10px] w-4 h-4 rounded-full bg-red-500 flex items-center justify-center"
+          >
+            <p class="text-[0.5rem] leading-none">
+              {{ cart.data.total_quantity }}
+            </p>
+          </div>
+        </div>
         <div v-if="user.isAuthenticated" :class="css.userMenuWrapper">
           <img
             :src="user.data.avatar"
             alt="User Picture"
             :class="css.avatar"
-            @mouseover="showUserMenu"
+            @mouseover="toggleUserMenu"
           />
           <div
             v-if="isUserMenuOpen"
             :class="css.userMenu"
-            @mouseover="showUserMenu"
-            @mouseleave="hideUserMenu"
+            @mouseleave="toggleUserMenu"
           >
             <ul class="p-2">
               <li :class="css.userLink">Profile</li>
               <li :class="css.userLink">Setting</li>
               <li
                 :class="css.userLink"
-                @click="handleLogout"
+                @click="logout"
               >
                 Exit
               </li>

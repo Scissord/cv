@@ -1,14 +1,14 @@
-import useUserStore from "./userStore";
-import useCartStore from "./cartStore";
-import useThemeStore from './themeStore';
-import useModalStore from './modalStore';
-import useNotificationStore from './notificationStore';
+// DATA
+import useUserStore from "./user";
+import useCartStore from "./cart";
+// UI
+import useThemeStore from './theme';
+import useModalStore from './modal';
+import useNotificationStore from './notification';
 
 export {
-  // DATA
   useUserStore,
   useCartStore,
-  // UI
   useThemeStore,
   useModalStore,
   useNotificationStore

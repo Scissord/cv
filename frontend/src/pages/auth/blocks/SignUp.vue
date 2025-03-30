@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import { useAuthApi } from '@api';
+const { signup } = useAuthApi();
+
 defineProps({
-  handleSignUp: { type: Function },
   handleChangeMode: { type: Function }
 })
 
@@ -74,9 +76,9 @@ const gender = ref(0);
     <Button
       type="submit"
       text="Submit"
-      className="rounded-lg w-full bg-blue-500 focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 hover:bg-blue-700"
+      class="rounded-lg w-full bg-blue-500 focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 hover:bg-blue-700"
       @click="async () => {
-        await handleSignUp(login, password, confirm_password, gender);
+        await signup(login, password, confirm_password, gender);
         handleChangeMode('signin');
       }"
     />

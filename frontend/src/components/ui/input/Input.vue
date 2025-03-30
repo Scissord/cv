@@ -50,7 +50,7 @@ const onInput = (event) => {
   />
 </template>
 
-<style>
+<style scoped>
 .input {
   width: 100%;
   padding: 0.6rem 1rem;

@@ -16,6 +16,7 @@ export default defineConfig({
       '@store': '/src/store/lib',
       '@api': '/src/api/lib',
       '@plugins': '/src/plugins/lib',
+      '@constants': '/src/constants/lib',
     },
     extensions: ['.js', '.vue', '.json'],
   }

@@ -1,13 +1,13 @@
-<script>
+<script setup lang="ts">
 
 </script>
 
 <template>
   <div>
-    <h1>Kanban Page</h1>
+
   </div>
 </template>
 
-<style lang="">
+<style lang="scss" scoped>
 
 </style>

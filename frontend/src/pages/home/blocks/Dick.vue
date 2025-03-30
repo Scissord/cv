@@ -1,10 +1,12 @@
 <script setup>
-
+defineProps({
+  title: String
+})
 </script>
 
 <template>
   <div>
-    я сосу хуй дададад
+    {{ title }}
   </div>
 </template>
 

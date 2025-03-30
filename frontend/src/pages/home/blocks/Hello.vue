@@ -1,4 +1,5 @@
 <script setup>
+import { h } from 'vue';
 import { useModalStore } from '@store';
 import Dick from './Dick';
 const modal = useModalStore()
@@ -6,7 +7,7 @@ const modal = useModalStore()
 const handleOpenModal = () => {
   modal.show({
     title: 'Это заголовок модалки',
-    children: Dick
+    children: h(Dick, { title: 'Я чорт' })
   })
 };
 
@@ -33,7 +34,6 @@ const handleOpenModal = () => {
           </p>
           <Button
             text="Open"
-            className="bg-red-500 focus:ring-2 focus:ring-red-700 focus:ring-offset-2 hover:bg-red-700"
             @click="handleOpenModal"
           />
         </div>

@@ -7,40 +7,48 @@ defineProps({
   },
   text: {
     type: String,
-    required: true,
+    required: false,
   },
-  className: {
-    type: String,
+  icon: {
+    type: [String, Array],
     required: false,
     default: '',
+  },
+  iconSize: {
+    type: String,
+    required: false,
+    default: 'text-sm',
   }
 });
 </script>
 
 <template>
-  <button
-    :type="type"
-    :class="['button', className]"
-  >
-    {{ text }}
+  <button :type="type" class="button">
+    <Icon
+      v-if="icon !== ''"
+      :icon="icon"
+      :class="['left-icon', iconSize]"
+    />
+    <span v-if="text" class="button-text">{{ text }}</span>
   </button>
 </template>
 
 <style>
 .button {
-  min-height: 30px;
-  min-width: 30px;
+  width: fit-content;
+  min-height: 10px;
+  min-width: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: fit-content;
-  padding: 8px 15px;
+  padding: 10px 20px;
   color: #fff;
   background-color: var(--primary-color);
   border-radius: 9999px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
   font-size: 16px;
-  overflow: hidden;
+  cursor: pointer;
+  gap: 8px; /* Расстояние между иконкой и текстом */
 }
 
 .button:hover {
@@ -56,5 +64,13 @@ defineProps({
 
 .button:active {
   transform: scale(0.95);
+}
+
+.left-icon {
+  font-size: 16px; /* Размер иконки */
+}
+
+.button-text {
+  white-space: nowrap; /* Чтобы текст не переносился */
 }
 </style>
