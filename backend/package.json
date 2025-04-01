@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon --env-file .env server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
@@ -14,10 +14,14 @@
   "dependencies": {
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.8.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-fileupload": "^1.5.1",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
     "js-sha256": "^0.11.0",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
@@ -28,10 +32,12 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "prettier": "^3.5.3"
   },
   "imports": {
     "#root/*.js": "./*.js",
+    "#constants/*.js": "./constants/*.js",
     "#controllers/*.js": "./controllers/*.js",
     "#middleware/*.js": "./middleware/*.js",
     "#models/*.js": "./models/*.js",
