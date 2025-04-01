@@ -68,9 +68,9 @@ const handleChangeProductQuantity = (product, quantity) => {
       <p v-if="isExpanded" class="text-justify">
         {{ product.description }}
       </p>
-      <button @click="toggleDescription" class="text-blue-500">
+      <p @click="toggleDescription" class="text-blue-500 cursor-pointer hover:text-blue-600 transition-all duration-300 ease-in-out">
         {{ isExpanded ? 'Read less' : 'Read more' }}
-      </button>
+      </p>
       <div class="w-full flex items-center justify-between">
         <span class="text-lg font-bold text-green-500">
         {{ product.price }}$

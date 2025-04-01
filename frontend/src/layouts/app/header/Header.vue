@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   useUserStore,
@@ -29,6 +29,15 @@ const toggleDrawer = () => {
 const toggleUserMenu = () => {
   isUserMenuOpen.value = !isUserMenuOpen.value;
 };
+
+
+watch(() => isDrawerOpen.value, (newValue) => {
+  if (newValue) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+});
 
 const css = {
   header: `

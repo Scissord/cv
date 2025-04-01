@@ -24,3 +24,15 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* hide scrollbar but allow scrolling */
+
+.no_scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+.no_scroll::-webkit-scrollbar {
+  display: none;
+}
