@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import AuthForm from "./blocks/AuthForm.vue";
+import AuthForm from './blocks/AuthForm.vue';
 
 const router = useRouter();
 </script>
@@ -13,10 +13,8 @@ const router = useRouter();
     >
       <Icon icon="fa-regular fa-circle-left" class="text-xl" />
     </div>
-    <AuthForm/>
+    <AuthForm />
   </div>
 </template>
 
-<style lang="">
-
-</style>
+<style lang=""></style>

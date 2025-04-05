@@ -3,6 +3,7 @@ import Home from '@/pages/home/Home.vue';
 import Chat from '@/pages/chat/Chat.vue';
 import Kanban from '@/pages/kanban/Kanban.vue';
 import Shop from '@/pages/shop/Shop.vue';
+import Product from '@/pages/shop/Product.vue';
 
 const appRoutes = {
   path: '/',
@@ -12,7 +13,8 @@ const appRoutes = {
     { path: 'chat', name: 'Chat', component: Chat },
     { path: 'kanban', name: 'Kanban', component: Kanban },
     { path: 'shop', name: 'Shop', component: Shop },
-  ],
+    { path: 'product/:id', name: 'Product', component: Product }
+  ]
 };
 
 export default appRoutes;

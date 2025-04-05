@@ -11,7 +11,7 @@ const useAuthApi = () => {
       const response = await axios({
         method: 'POST',
         url: `${baseUrl}/auth/login`,
-        withCredentials: true,
+        // withCredentials: true,
         data: {
           login,
           password
@@ -35,7 +35,7 @@ const useAuthApi = () => {
         method: 'POST',
         url: `${baseUrl}/auth/logout`,
         headers: { Authorization: `Bearer ${user.accessToken}` },
-        withCredentials: true,
+        // withCredentials: true,
         data
       });
 
@@ -53,8 +53,8 @@ const useAuthApi = () => {
       const response = await axios({
         method: 'POST',
         url: `${baseUrl}/auth/refresh`,
-        headers: { Authorization: `Bearer ${user.accessToken}` },
-        withCredentials: true
+        headers: { Authorization: `Bearer ${user.accessToken}` }
+        // withCredentials: true
       });
 
       if (response.data.newAccessToken) user.setAccessToken(response.data.newAccessToken);
