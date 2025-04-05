@@ -1,41 +1,76 @@
 {
-  "editor.fontSize": 15,
   "window.zoomLevel": 1.8,
+  "editor.fontSize": 15,
   "editor.tabSize": 2,
+  "editor.fontFamily": "FiraCode Nerd Font, JetBrainsMono Nerd Font, monospace",
+  "editor.fontWeight": "500",
   "editor.detectIndentation": false,
-  "files.trimTrailingWhitespace": true,
-  "editor.formatOnSave": true,
-  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-  "workbench.editor.enablePreview": false,
+  "editor.fontLigatures": true,
   "editor.minimap.enabled": false,
   "editor.wordWrap": "on",
   "editor.wrappingIndent": "indent",
-  "html.format.enable": true,
-  "css.lint.unknownAtRules": "ignore",
+  "editor.accessibilitySupport": "off",
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.requireConfig": true,
+
+  "workbench.editor.enablePreview": false,
   // "workbench.colorTheme": "One Monokai",
   "workbench.iconTheme": "material-icon-theme",
-  "editor.accessibilitySupport": "off",
+
+  "explorer.confirmDelete": false,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.trimTrailingWhitespace": true,
+  "html.format.enable": true,
+  "css.lint.unknownAtRules": "ignore",
+
   "git.ignoreMissingGitWarning": true,
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "git.autofetch": true,
+
   "files.eol": "\n",
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
+
+  "liveSassCompile.settings.showOutputWindowOn": "Error",
+  "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.port": 5501,
+
   "cSpell.words": [
     "@tailwind",
+    "Articuline",
     "axios",
+    "beclean",
+    "eropower",
+    "Femiston",
     "Instatus",
     "Kanban",
+    "leadvertex",
+    "manbalance",
+    "nodenext",
+    "nuxt",
     "Pinia",
+    "prostrong",
+    "Scissord",
     "Scissxrd",
     "signin",
     "Signup",
