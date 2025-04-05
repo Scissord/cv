@@ -8,6 +8,7 @@ import ERRORS from '#constants/errors.js';
 
 export const signin = async (req, res) => {
   try {
+    console.log('dadada');
     let { login, password } = req.body;
 
     // 1. validation
